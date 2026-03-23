@@ -21,7 +21,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
-        "https://your-frontend-name.vercel.app",
+        "https://hire-sense-livid.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
