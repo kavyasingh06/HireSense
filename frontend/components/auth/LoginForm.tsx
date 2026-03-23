@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -17,7 +21,7 @@ export default function LoginForm() {
     setMessage("");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/auth/login", {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,9 +97,9 @@ export default function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-zinc-400">
         Don&apos;t have an account?{" "}
-        <a href="/signup" className="font-medium text-white">
+        <Link href="/signup" className="font-medium text-white">
           Sign up
-        </a>
+        </Link>
       </p>
     </div>
   );
