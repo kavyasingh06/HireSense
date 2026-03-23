@@ -1,12 +1,31 @@
 fastapi
 uvicorn[standard]
+
+# File uploads
 python-multipart
+
+# Database
 sqlalchemy
+
+# Data validation
 pydantic
+email-validator
+
+# Environment variables
 python-dotenv
+
+# Resume parsing
 python-docx
 pypdf
 pdfplumber
+
+# Machine Learning / NLP
+scikit-learn
+numpy
+
+# Authentication
 passlib[bcrypt]
 bcrypt
-email-validator
+
+# Optional but useful (safe to include)
+requests
