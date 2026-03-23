@@ -295,6 +295,9 @@ import Topbar from "@/components/dashboard/Topbar";
 import Cards from "@/components/dashboard/Cards";
 import AnalysisChart from "@/components/dashboard/AnalysisChart";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
 type AnalyzeResponse = {
   ats_score: number;
   matched_skills: string[];
@@ -335,7 +338,7 @@ export default function DashboardPage() {
       formData.append("job_description", jobDescription);
       formData.append("user_id", String(parsedUser?.id || 1));
 
-      const res = await fetch("http://127.0.0.1:8000/analyze", {
+      const res = await fetch(`${API_URL}/analyze`, {
         method: "POST",
         body: formData,
       });
@@ -388,7 +391,6 @@ export default function DashboardPage() {
       <section className="flex-1">
         <Topbar />
 
-        {/* CARDS */}
         <div className="grid gap-6 p-8 md:grid-cols-2 xl:grid-cols-4">
           <Cards
             title="ATS Score"
@@ -428,7 +430,6 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* CHART */}
         <div className="px-8 pb-8">
           <div className="rounded-3xl bg-white p-6 shadow">
             <h2 className="mb-4 text-lg font-bold text-black">
@@ -449,7 +450,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* INPUT SECTION */}
         <div className="grid gap-6 px-8 pb-8 lg:grid-cols-2">
           <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
             <h2 className="text-xl font-bold text-black">Resume Upload</h2>
@@ -496,7 +496,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* MATCHED + MISSING */}
         <div className="grid gap-6 px-8 pb-8 lg:grid-cols-2">
           <div className="rounded-3xl bg-white p-6 shadow">
             <h2 className="font-bold text-black">Matched Skills</h2>
@@ -545,7 +544,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* SUGGESTIONS + DOWNLOAD */}
         <div className="grid gap-6 px-8 pb-8 lg:grid-cols-2">
           <div className="rounded-3xl bg-white p-6 shadow">
             <h2 className="font-bold text-black">AI Suggestions</h2>
