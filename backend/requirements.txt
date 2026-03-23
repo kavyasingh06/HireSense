@@ -6,5 +6,7 @@ pydantic
 python-dotenv
 python-docx
 pypdf
+pdfplumber
 passlib[bcrypt]
+bcrypt
 email-validator
