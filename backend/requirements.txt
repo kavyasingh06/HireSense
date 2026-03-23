@@ -6,3 +6,4 @@ pydantic
 python-dotenv
 python-docx
 pypdf
+passlib[bcrypt]
