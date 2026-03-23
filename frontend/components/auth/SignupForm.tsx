@@ -16,7 +16,7 @@ export default function SignupForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
@@ -34,10 +34,17 @@ export default function SignupForm() {
         }),
       });
 
-      const data = await res.json();
+      const raw = await res.text();
+      let data: any = {};
+
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        data = { detail: raw || "Invalid server response" };
+      }
 
       if (!res.ok) {
-        setMessage(data.detail || "Signup failed");
+        setMessage(data.detail || data.message || "Signup failed");
         return;
       }
 
@@ -50,7 +57,8 @@ export default function SignupForm() {
         router.push("/login");
       }, 1200);
     } catch (error) {
-      setMessage("Something went wrong. Please try again.");
+      console.error("Signup error:", error);
+      setMessage("Cannot connect to server.");
     } finally {
       setLoading(false);
     }
@@ -65,7 +73,9 @@ export default function SignupForm() {
 
       <form onSubmit={handleSignup} className="mt-6 space-y-5">
         <div>
-          <label className="mb-2 block text-sm text-zinc-300">Full Name</label>
+          <label className="mb-2 block text-sm text-zinc-300">
+            Full Name
+          </label>
           <input
             type="text"
             placeholder="Enter your full name"
@@ -77,7 +87,9 @@ export default function SignupForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm text-zinc-300">Email</label>
+          <label className="mb-2 block text-sm text-zinc-300">
+            Email
+          </label>
           <input
             type="email"
             placeholder="Enter your email"
@@ -89,7 +101,9 @@ export default function SignupForm() {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm text-zinc-300">Password</label>
+          <label className="mb-2 block text-sm text-zinc-300">
+            Password
+          </label>
           <input
             type="password"
             placeholder="Create password"
