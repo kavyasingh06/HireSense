@@ -22,10 +22,16 @@ pdfplumber
 # Machine Learning / NLP
 scikit-learn
 numpy
-
+pydantic
 # Authentication
-passlib[bcrypt]
-bcrypt
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 
 # Optional but useful (safe to include)
+
+alembic
+python-jose
+psycopg2-binary
 requests
+pymupdf
+python-docx
