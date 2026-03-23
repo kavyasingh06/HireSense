@@ -1,0 +1,1 @@
+app.include_router(evaluator_router, prefix="/evaluator", tags=["Evaluator"])
