@@ -289,7 +289,7 @@
 // }
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import Cards from "@/components/dashboard/Cards";
@@ -307,12 +307,26 @@ type AnalyzeResponse = {
   message: string;
 };
 
+type UserType = {
+  id?: number;
+  full_name: string;
+  email: string;
+};
+
 export default function DashboardPage() {
+  const [user, setUser] = useState<UserType | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResponse | null>(null);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleAnalyze = async () => {
     if (!selectedFile) {
@@ -346,7 +360,7 @@ export default function DashboardPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(JSON.stringify(data));
+        setError(data.detail || "Analysis failed");
         return;
       }
 
@@ -390,6 +404,13 @@ export default function DashboardPage() {
 
       <section className="flex-1">
         <Topbar />
+
+        <div className="px-8 pt-6">
+          <h1 className="text-2xl font-bold text-black">Dashboard</h1>
+          <p className="mt-1 text-sm text-zinc-600">
+            Welcome, {user ? user.full_name : "Loading..."}
+          </p>
+        </div>
 
         <div className="grid gap-6 p-8 md:grid-cols-2 xl:grid-cols-4">
           <Cards
